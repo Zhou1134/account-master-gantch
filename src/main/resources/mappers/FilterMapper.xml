@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.bupt.new_account.dao.FilterMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.bupt.new_account.model.Filter" >
+    <constructor >
+      <idArg column="filterId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="jsCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    filterId, type, name, jsCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from filter
+    where filterId = #{filterid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from filter
+    where filterId = #{filterid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.edu.bupt.new_account.model.Filter" >
+    insert into filter (filterId, type, name, 
+      jsCode)
+    values (#{filterid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{jscode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.bupt.new_account.model.Filter" >
+    insert into filter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="filterid != null" >
+        filterId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="jscode != null" >
+        jsCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="filterid != null" >
+        #{filterid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="jscode != null" >
+        #{jscode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.bupt.new_account.model.Filter" >
+    update filter
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="jscode != null" >
+        jsCode = #{jscode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where filterId = #{filterid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.bupt.new_account.model.Filter" >
+    update filter
+    set type = #{type,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      jsCode = #{jscode,jdbcType=VARCHAR}
+    where filterId = #{filterid,jdbcType=INTEGER}
+  </update>
+</mapper>

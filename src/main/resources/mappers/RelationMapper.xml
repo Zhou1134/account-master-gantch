@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.bupt.new_account.dao.RelationMapper">
+  <resultMap id="BaseResultMap" type="com.edu.bupt.new_account.model.Relation">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="binder" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="binded" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="gateid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, binder, binded, gateid, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getBindedRelations" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_relation
+    where binded = #{binded}
+  </select>
+
+  <select id="getRelationsByBinderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_relation
+    where binder = #{binder}
+  </select>
+
+  <select id="getRelationBy2Bind"  parameterType="com.edu.bupt.new_account.model.Relation" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_relation
+    where binder = #{binder}
+    and binded = #{binded}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.edu.bupt.new_account.model.Relation">
+    insert into user_relation (id, binder, binded, 
+      gateid, remark)
+    values (#{id,jdbcType=INTEGER}, #{binder,jdbcType=INTEGER}, #{binded,jdbcType=INTEGER}, 
+      #{gateid,jdbcType=VARCHAR}, #{remark, jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.bupt.new_account.model.Relation">
+    update user_relation
+    <set>
+      <if test="binder != null">
+        binder = #{binder,jdbcType=INTEGER},
+      </if>
+      <if test="binded != null">
+        binded = #{binded,jdbcType=INTEGER},
+      </if>
+      <if test="gateid != null">
+        gateid = #{gateid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType = VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertSelective" parameterType="com.edu.bupt.new_account.model.Relation">
+    insert into user_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="binder != null">
+        binder,
+      </if>
+      <if test="binded != null">
+        binded,
+      </if>
+      <if test="gateid != null">
+        gateid,
+      </if>
+      <if test="remark != null">
+        remark
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="binder != null">
+        #{binder,jdbcType=INTEGER},
+      </if>
+      <if test="binded != null">
+        #{binded,jdbcType=INTEGER},
+      </if>
+      <if test="gateid != null">
+        #{gateid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.edu.bupt.new_account.model.Relation">
+    update user_relation
+    set binder = #{binder,jdbcType=INTEGER},
+      binded = #{binded,jdbcType=INTEGER},
+      gateid = #{gateid,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

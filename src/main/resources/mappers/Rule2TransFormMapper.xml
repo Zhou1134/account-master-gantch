@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.bupt.new_account.dao.Rule2TransFormMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.bupt.new_account.model.Rule2TransFormKey" >
+    <constructor >
+      <idArg column="transformId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="ruleId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    transformId, ruleId
+  </sql>
+  <select id="getBindedR2T" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from rule2TransForm_Relation
+    where ruleId = #{ruleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.edu.bupt.new_account.model.Rule2TransFormKey" >
+    delete from rule2TransForm_Relation
+    where transformId = #{transformid,jdbcType=INTEGER}
+      and ruleId = #{ruleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.edu.bupt.new_account.model.Rule2TransFormKey" >
+    insert into rule2TransForm_Relation (transformId, ruleId)
+    values (#{transformid,jdbcType=INTEGER}, #{ruleid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.bupt.new_account.model.Rule2TransFormKey" >
+    insert into rule2TransForm_Relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="transformid != null" >
+        transformId,
+      </if>
+      <if test="ruleid != null" >
+        ruleId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="transformid != null" >
+        #{transformid,jdbcType=INTEGER},
+      </if>
+      <if test="ruleid != null" >
+        #{ruleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

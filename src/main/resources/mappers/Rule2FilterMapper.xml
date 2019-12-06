@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.bupt.new_account.dao.Rule2FilterMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.bupt.new_account.model.Rule2FilterKey" >
+    <constructor >
+      <idArg column="filterId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="ruleId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    filterId, ruleId
+  </sql>
+  <select id="getBindedR2F" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from rule2Filter_Relation
+    where ruleId = #{ruleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.edu.bupt.new_account.model.Rule2FilterKey" >
+    delete from rule2Filter_Relation
+    where filterId = #{filterid,jdbcType=INTEGER}
+      and ruleId = #{ruleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.edu.bupt.new_account.model.Rule2FilterKey" >
+    insert into rule2Filter_Relation (filterId, ruleId)
+    values (#{filterid,jdbcType=INTEGER}, #{ruleid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.bupt.new_account.model.Rule2FilterKey" >
+    insert into rule2Filter_Relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="filterid != null" >
+        filterId,
+      </if>
+      <if test="ruleid != null" >
+        ruleId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="filterid != null" >
+        #{filterid,jdbcType=INTEGER},
+      </if>
+      <if test="ruleid != null" >
+        #{ruleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
